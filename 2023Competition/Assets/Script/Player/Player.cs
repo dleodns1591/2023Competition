@@ -5,8 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("이동")]
-    [SerializeField] int moveSpeed;
+    [SerializeField] int moveSpeed = 0;
     [SerializeField] Vector3 moveDirection = Vector3.zero;
+
+    [Header("공격")]
+    [SerializeField] GameObject bullet;
+    [SerializeField] float attackRange = 0;
 
     void Start()
     {
@@ -15,6 +19,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Attack();
     }
 
     private void FixedUpdate()
@@ -24,7 +29,6 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
@@ -37,6 +41,31 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 20)), 0.1f);
         else
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 0.1f);
+    }
 
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            StartCoroutine("BulletSummon");
+        else if(Input.GetKeyUp(KeyCode.Space))
+            StopCoroutine("BulletSummon");
+    }
+
+    IEnumerator BulletSummon()
+    {
+        while (true)
+        {
+            Instantiate(bullet, new Vector3(transform.position.x + 1.1f, transform.position.y, transform.position.z + 3), Quaternion.Euler(new Vector3(90, 0, 0)));
+            yield return new WaitForSeconds(attackRange);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Wall"))
+        {
+            Debug.Log("asdfasdf");
+            Destroy(gameObject);
+        }
     }
 }
