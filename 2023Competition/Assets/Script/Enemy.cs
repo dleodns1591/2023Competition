@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     [Header("АјАн")]
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject meteorAmong;
     [SerializeField] int attack = 0;
     [SerializeField] int score = 0;
 
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         Move();
         Hp();
+        MeteorRotation();
     }
 
     void Move()
@@ -54,7 +56,17 @@ public class Enemy : MonoBehaviour
         {
             case EAttack.Circle:
                 break;
+        }
+    }
+
+    void MeteorRotation()
+    {
+        int speed = 10;
+
+        switch (eAttack)
+        {
             case EAttack.Meteor:
+                meteorAmong.transform.Rotate(new Vector3(speed, speed, -speed) * Time.deltaTime * 2 * speed);
                 break;
         }
     }
@@ -66,5 +78,21 @@ public class Enemy : MonoBehaviour
 
         else if (other.CompareTag("PlayerBullet"))
             hp -= Bullet.instance.attack;
+
+        else if (other.CompareTag("Player"))
+        {
+            switch (eAttack)
+            {
+                case EAttack.Meteor:
+                    Player.instance.currentHp -= attack;
+                    Destroy(gameObject);
+                    break;
+
+                default:
+                    Player.instance.currentHp -= Bullet.instance.attack;
+                    Destroy(gameObject);
+                    break;
+            }
+        }
     }
 }

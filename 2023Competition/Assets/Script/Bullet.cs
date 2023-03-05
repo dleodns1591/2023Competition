@@ -45,11 +45,18 @@ public class Bullet : MonoBehaviour
         {
             case EBullet.Player:
                 if (other.CompareTag("Enemy"))
+                {
                     other.GetComponent<Enemy>().hp -= attack;
+                    Destroy(gameObject);
+                }
                 break;
+
             case EBullet.Enemy:
                 if (other.CompareTag("Player"))
+                {
                     Player.instance.currentHp -= attack;
+                    Destroy(gameObject);
+                }
                 break;
         }
     }
