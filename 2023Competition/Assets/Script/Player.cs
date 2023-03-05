@@ -15,9 +15,13 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float attackRange = 0;
 
+    [Header("Ã¼·Â")]
+    public int currentHp;
+    public int maxHp;
+
     void Start()
     {
-
+        currentHp = maxHp;
     }
 
     void Update()
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             StartCoroutine("BulletSummon");
-        else if(Input.GetKeyUp(KeyCode.Space))
+        else if (Input.GetKeyUp(KeyCode.Space))
             StopCoroutine("BulletSummon");
     }
 

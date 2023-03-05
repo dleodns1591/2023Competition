@@ -7,6 +7,13 @@ public class Bullet : MonoBehaviour
     public static Bullet instance;
     void Awake() => instance = this;
 
+    public enum EBullet
+    {
+        Player,
+        Enemy,
+    }
+    public EBullet eBullet;
+
     [Header("¿Ãµø")]
     [SerializeField] int moveSpeed = 0;
     [SerializeField] Vector3 moveDirection = Vector3.zero;
@@ -16,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -31,7 +38,19 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Wall"))
+        if (other.CompareTag("DestroyWall"))
             Destroy(gameObject);
+
+        switch (eBullet)
+        {
+            case EBullet.Player:
+                if (other.CompareTag("Enemy"))
+                    other.GetComponent<Enemy>().hp -= attack;
+                break;
+            case EBullet.Enemy:
+                if (other.CompareTag("Player"))
+                    Player.instance.currentHp -= attack;
+                break;
+        }
     }
 }

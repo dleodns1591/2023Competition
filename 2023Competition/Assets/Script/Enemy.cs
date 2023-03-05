@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] int score = 0;
 
     [Header("Ã¼·Â")]
-    [SerializeField] int hp = 0;
+    public int hp = 0;
 
     void Start()
     {
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        switch(eAttack)
+        switch (eAttack)
         {
             case EAttack.Circle:
                 break;
