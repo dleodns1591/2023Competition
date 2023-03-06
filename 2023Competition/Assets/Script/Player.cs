@@ -16,19 +16,22 @@ public class Player : MonoBehaviour
     [SerializeField] float attackRange = 0;
 
     [Header("내구도 / 연료")]
-    public int currentHp;
-    public int currentFuel;
-    public int maxHp;
-    public int maxFuel;
+    public float currentHp = 0;
+    public float currentFuel = 0;
+    public int maxHp = 0;
+    public int maxFuel = 0;
+
 
     void Start()
     {
         currentHp = maxHp;
+        currentFuel = maxFuel;
     }
 
     void Update()
     {
         Attack();
+        GameOver();
     }
 
     private void FixedUpdate()
@@ -60,6 +63,16 @@ public class Player : MonoBehaviour
             StopCoroutine("BulletSummon");
     }
 
+    void GameOver()
+    {
+        if(currentFuel <= 0 || currentHp <= 0)
+        {
+            Time.timeScale = 0;
+            UIManager.instance.gameoverWindow.SetActive(true);
+            UIManager.instance.overScore.text = "Score : " + GameManager.instance.currentScore;
+        }
+    }
+
     IEnumerator BulletSummon()
     {
         while (true)
@@ -68,6 +81,4 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(attackRange);
         }
     }
-
-
 }

@@ -86,7 +86,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -126,6 +126,6 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: -1}
   bullet: {fileID: 0}
   meteorAmong: {fileID: 0}
-  attack: 0
+  attack: 10
   score: 100
-  hp: 2
+  hp: 5

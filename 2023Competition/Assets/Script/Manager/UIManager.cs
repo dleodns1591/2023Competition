@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Slider fuelSlider;
     [SerializeField] Text hpText;
     [SerializeField] Text fuelText;
+    [SerializeField] float fuelDownSpeed = 0;
+    [SerializeField] float hpDownSpeed = 0;
 
     [Header("메뉴화면")]
     [SerializeField] GameObject menuWindow;
@@ -25,8 +27,8 @@ public class UIManager : MonoBehaviour
     bool isMenuCheck = false;
 
     [Header("게임오버")]
-    [SerializeField] GameObject gameoverWindow;
-    [SerializeField] Text overScore;
+    public GameObject gameoverWindow;
+    public Text overScore;
     [SerializeField] Button overOutBtn;
 
     void Start()
@@ -38,7 +40,6 @@ public class UIManager : MonoBehaviour
     {
         Menu();
         Score();
-        GameOver();
         Slider();
     }
 
@@ -61,16 +62,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void GameOver()
-    {
-        if(Player.instance.currentHp <= 0)
-        {
-            Time.timeScale = 0;
-            overScore.text = "Score : " + GameManager.instance.currentScore;
-            gameoverWindow.SetActive(true);
-        }
-    }
-
     void Score()
     {
         scoreText.text = "Score : " + GameManager.instance.currentScore;
@@ -78,11 +69,19 @@ public class UIManager : MonoBehaviour
 
     void Slider()
     {
-        hpText.text = Player.instance.currentHp.ToString();
-        fuelText.text = Player.instance.currentFuel.ToString();
+        float currentHp = Player.instance.currentHp;
+        float maxHp = Player.instance.maxHp;
 
-        hpSlider.value = Player.instance.currentHp / Player.instance.maxHp;
-        fuelSlider.value = Player.instance.currentFuel / Player.instance.maxFuel;
+        float currentFuel = Player.instance.currentFuel;
+        float maxFuel = Player.instance.maxFuel;
+
+        hpText.text = ((int)currentHp).ToString();
+        fuelText.text = ((int)currentFuel).ToString();
+
+        Player.instance.currentFuel -= Time.deltaTime * fuelDownSpeed;
+
+        hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp / maxHp, Time.deltaTime * hpDownSpeed);
+        fuelSlider.value = Mathf.Lerp(fuelSlider.value, currentFuel / maxFuel, Time.deltaTime * fuelDownSpeed);
     }
 
     void MenuBtns()
