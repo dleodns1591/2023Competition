@@ -15,9 +15,11 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float attackRange = 0;
 
-    [Header("체력")]
+    [Header("내구도 / 연료")]
     public int currentHp;
+    public int currentFuel;
     public int maxHp;
+    public int maxFuel;
 
     void Start()
     {

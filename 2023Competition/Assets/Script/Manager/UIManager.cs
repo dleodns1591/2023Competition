@@ -11,6 +11,12 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] Text scoreText;
 
+    [Header("게이지")]
+    [SerializeField] Slider hpSlider;
+    [SerializeField] Slider fuelSlider;
+    [SerializeField] Text hpText;
+    [SerializeField] Text fuelText;
+
     [Header("메뉴화면")]
     [SerializeField] GameObject menuWindow;
     [SerializeField] Button backBtn;
@@ -33,6 +39,7 @@ public class UIManager : MonoBehaviour
         Menu();
         Score();
         GameOver();
+        Slider();
     }
 
     void Menu()
@@ -67,6 +74,15 @@ public class UIManager : MonoBehaviour
     void Score()
     {
         scoreText.text = "Score : " + GameManager.instance.currentScore;
+    }
+
+    void Slider()
+    {
+        hpText.text = Player.instance.currentHp.ToString();
+        fuelText.text = Player.instance.currentFuel.ToString();
+
+        hpSlider.value = Player.instance.currentHp / Player.instance.maxHp;
+        fuelSlider.value = Player.instance.currentFuel / Player.instance.maxFuel;
     }
 
     void MenuBtns()
