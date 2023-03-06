@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     void Awake() => instance = this;
 
     [SerializeField] Text scoreText;
+    [SerializeField] Text timerText;
+    float timer = 0;
 
     [Header("∞‘¿Ã¡ˆ")]
     [SerializeField] Slider hpSlider;
@@ -39,7 +41,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         Menu();
-        Score();
+        IngameText();
         Slider();
     }
 
@@ -62,9 +64,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void Score()
+    void IngameText()
     {
+        timer += Time.deltaTime;
+
         scoreText.text = "Score : " + GameManager.instance.currentScore;
+        timerText.text = "Time : " + (int)timer;
     }
 
     void Slider()

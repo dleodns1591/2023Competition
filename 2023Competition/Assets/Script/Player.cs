@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +22,17 @@ public class Player : MonoBehaviour
     public int maxHp = 0;
     public int maxFuel = 0;
 
+    [Header("½ºÅ³")]
+    [SerializeField] Image hpSkill;
+    [SerializeField] Image bombSkill;
+
+    [SerializeField] float hpCoolTime = 0;
+    [SerializeField] float hpCurrentCoolTime = 0;
+    [SerializeField] float bombCoolTime = 0;
+    [SerializeField] float bombCurrentCoolTime = 0;
+
+    bool isHpSkillUse = false;
+    bool isBombSkillUse = false;
 
     void Start()
     {
@@ -32,6 +44,7 @@ public class Player : MonoBehaviour
     {
         Attack();
         GameOver();
+        Skill();
     }
 
     private void FixedUpdate()
@@ -63,9 +76,64 @@ public class Player : MonoBehaviour
             StopCoroutine("BulletSummon");
     }
 
+    void Skill()
+    {
+        hpSkill.fillAmount = Mathf.Lerp(hpSkill.fillAmount, hpCurrentCoolTime / hpCoolTime, Time.deltaTime * 10);
+        bombSkill.fillAmount = Mathf.Lerp(bombSkill.fillAmount, bombCurrentCoolTime / bombCoolTime, Time.deltaTime * 10);
+
+        // ³»±¸µµ ½ºÅ³
+        if (Input.GetKeyDown(KeyCode.Z) && !isHpSkillUse)
+        {
+            isHpSkillUse = true;
+            hpSkill.fillAmount = 1;
+            hpCurrentCoolTime = hpCoolTime;
+            StartCoroutine(HpCoolTime());
+
+            if (currentHp + 10 <= maxHp)
+                currentHp += 10;
+            else
+                currentHp = maxHp;
+        }
+
+        if (hpCurrentCoolTime == 0)
+            isHpSkillUse = false;
+
+        // ÆøÅº
+        if (Input.GetKeyDown(KeyCode.X) && !isBombSkillUse)
+        {
+            isBombSkillUse = true;
+            bombSkill.fillAmount = 1;
+            bombCurrentCoolTime = bombCoolTime;
+            StartCoroutine(BombCoolTime());
+        }
+
+        if (bombCurrentCoolTime == 0)
+            isBombSkillUse = false;
+    }
+
+    IEnumerator HpCoolTime()
+    {
+        while (hpCurrentCoolTime > 0)
+        {
+            yield return new WaitForSeconds(1);
+            hpCurrentCoolTime -= 1;
+        }
+        yield break;
+    }
+
+    IEnumerator BombCoolTime()
+    {
+        while (bombCurrentCoolTime > 0)
+        {
+            yield return new WaitForSeconds(1);
+            bombCurrentCoolTime -= 1;
+        }
+        yield break;
+    }
+
     void GameOver()
     {
-        if(currentFuel <= 0 || currentHp <= 0)
+        if (currentFuel <= 0 || currentHp <= 0)
         {
             Time.timeScale = 0;
             UIManager.instance.gameoverWindow.SetActive(true);

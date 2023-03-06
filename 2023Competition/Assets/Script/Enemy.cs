@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
 
     void Hp()
     {
-        if (hp == 0)
+        if (hp <= 0)
         {
             GameManager.instance.currentScore += score;
             Destroy(gameObject);
@@ -81,18 +81,8 @@ public class Enemy : MonoBehaviour
 
         else if (other.CompareTag("Player"))
         {
-            switch (eAttack)
-            {
-                case EAttack.Meteor:
-                    Player.instance.currentHp -= attack;
-                    Destroy(gameObject);
-                    break;
-
-                default:
-                    Player.instance.currentHp -= Bullet.instance.attack;
-                    Destroy(gameObject);
-                    break;
-            }
+            Player.instance.currentHp -= attack;
+            Destroy(gameObject);
         }
     }
 }
