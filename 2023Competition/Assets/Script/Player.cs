@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] float bombCoolTime = 0;
     [SerializeField] float bombCurrentCoolTime = 0;
 
-    [SerializeField] GameObject bomb;
+    [SerializeField] GameObject bombPrefab;
     [SerializeField] GameObject enemyDieParticle;
 
     [SerializeField] Image hpSkill;
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     [SerializeField] Text notSkillText;
 
     GameObject spawnManager;
+    GameObject putBomb;
 
     bool isHpSkillUse = false;
     bool isBombSkillUse = false;
@@ -47,13 +48,17 @@ public class Player : MonoBehaviour
         currentFuel = maxFuel;
 
         spawnManager = GameObject.Find("SpawnManager");
+
     }
 
     void Update()
     {
         Attack();
         GameOver();
-        Skill();
+        StartCoroutine(Skill());
+
+        if(putBomb != null)
+            putBomb.transform.position = Vector3.Slerp(putBomb.transform.position, new Vector3(transform.position.x, transform.position.y, -1), 0.05f);
 
     }
 
@@ -87,7 +92,7 @@ public class Player : MonoBehaviour
     }
 
     #region ½ºÅ³
-    void Skill()
+    IEnumerator Skill()
     {
         hpSkill.fillAmount = Mathf.Lerp(hpSkill.fillAmount, hpCurrentCoolTime / hpCoolTime, Time.deltaTime * 10);
         bombSkill.fillAmount = Mathf.Lerp(bombSkill.fillAmount, bombCurrentCoolTime / bombCoolTime, Time.deltaTime * 10);
@@ -123,19 +128,22 @@ public class Player : MonoBehaviour
         {
             if (!isBombSkillUse)
             {
-
                 isBombSkillUse = true;
                 bombSkill.fillAmount = 1;
                 bombCurrentCoolTime = bombCoolTime;
                 StartCoroutine(BombCoolTime());
 
-                //GameObject bombSummon = Instantiate(bomb, new Vector3(transform.position.x, -1, -20), bomb.transform.rotation);
+                putBomb = Instantiate(bombPrefab, new Vector3(transform.position.x, -1, -20), bombPrefab.transform.rotation);
+                yield return new WaitForSeconds(0.5f);
 
                 for (int i = 0; i < spawnManager.transform.childCount; i++)
                 {
+                    GameManager.instance.currentScore += spawnManager.transform.GetChild(i).GetComponent<Enemy>().score;
+
                     GameObject particle = Instantiate(enemyDieParticle, spawnManager.transform.GetChild(i).position, Quaternion.identity);
-                    Destroy(spawnManager.transform.GetChild(i).gameObject);
+                    Destroy(putBomb);
                     Destroy(particle, 3);
+                    Destroy(spawnManager.transform.GetChild(i).gameObject);
                 }
             }
 

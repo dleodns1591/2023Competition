@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject meteorAmong;
     [SerializeField] int attack = 0;
-    [SerializeField] int score = 0;
+    public int score = 0;
 
     [Header("Ã¼·Â")]
     public int hp = 0;
