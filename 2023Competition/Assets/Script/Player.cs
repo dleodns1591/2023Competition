@@ -23,13 +23,20 @@ public class Player : MonoBehaviour
     public int maxFuel = 0;
 
     [Header("스킬")]
-    [SerializeField] Image hpSkill;
-    [SerializeField] Image bombSkill;
-
     [SerializeField] float hpCoolTime = 0;
     [SerializeField] float hpCurrentCoolTime = 0;
     [SerializeField] float bombCoolTime = 0;
     [SerializeField] float bombCurrentCoolTime = 0;
+
+    [SerializeField] GameObject bomb;
+    [SerializeField] GameObject enemyDieParticle;
+
+    [SerializeField] Image hpSkill;
+    [SerializeField] Image bombSkill;
+
+    [SerializeField] Text notSkillText;
+
+    GameObject spawnManager;
 
     bool isHpSkillUse = false;
     bool isBombSkillUse = false;
@@ -38,6 +45,8 @@ public class Player : MonoBehaviour
     {
         currentHp = maxHp;
         currentFuel = maxFuel;
+
+        spawnManager = GameObject.Find("SpawnManager");
     }
 
     void Update()
@@ -45,6 +54,7 @@ public class Player : MonoBehaviour
         Attack();
         GameOver();
         Skill();
+
     }
 
     private void FixedUpdate()
@@ -76,35 +86,64 @@ public class Player : MonoBehaviour
             StopCoroutine("BulletSummon");
     }
 
+    #region 스킬
     void Skill()
     {
         hpSkill.fillAmount = Mathf.Lerp(hpSkill.fillAmount, hpCurrentCoolTime / hpCoolTime, Time.deltaTime * 10);
         bombSkill.fillAmount = Mathf.Lerp(bombSkill.fillAmount, bombCurrentCoolTime / bombCoolTime, Time.deltaTime * 10);
 
         // 내구도 스킬
-        if (Input.GetKeyDown(KeyCode.Z) && !isHpSkillUse)
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            isHpSkillUse = true;
-            hpSkill.fillAmount = 1;
-            hpCurrentCoolTime = hpCoolTime;
-            StartCoroutine(HpCoolTime());
+            if (!isHpSkillUse)
+            {
+                isHpSkillUse = true;
+                hpSkill.fillAmount = 1;
+                hpCurrentCoolTime = hpCoolTime;
+                StartCoroutine(HpCoolTime());
 
-            if (currentHp + 10 <= maxHp)
-                currentHp += 10;
+                if (currentHp + 10 <= maxHp)
+                    currentHp += 10;
+                else
+                    currentHp = maxHp;
+            }
+
             else
-                currentHp = maxHp;
+            {
+                StopCoroutine("NotSkill");
+                StartCoroutine("NotSkill");
+            }
         }
 
         if (hpCurrentCoolTime == 0)
             isHpSkillUse = false;
 
         // 폭탄
-        if (Input.GetKeyDown(KeyCode.X) && !isBombSkillUse)
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            isBombSkillUse = true;
-            bombSkill.fillAmount = 1;
-            bombCurrentCoolTime = bombCoolTime;
-            StartCoroutine(BombCoolTime());
+            if (!isBombSkillUse)
+            {
+
+                isBombSkillUse = true;
+                bombSkill.fillAmount = 1;
+                bombCurrentCoolTime = bombCoolTime;
+                StartCoroutine(BombCoolTime());
+
+                //GameObject bombSummon = Instantiate(bomb, new Vector3(transform.position.x, -1, -20), bomb.transform.rotation);
+
+                for (int i = 0; i < spawnManager.transform.childCount; i++)
+                {
+                    GameObject particle = Instantiate(enemyDieParticle, spawnManager.transform.GetChild(i).position, Quaternion.identity);
+                    Destroy(spawnManager.transform.GetChild(i).gameObject);
+                    Destroy(particle, 3);
+                }
+            }
+
+            else
+            {
+                StopCoroutine("NotSkill");
+                StartCoroutine("NotSkill");
+            }
         }
 
         if (bombCurrentCoolTime == 0)
@@ -130,6 +169,27 @@ public class Player : MonoBehaviour
         }
         yield break;
     }
+
+    IEnumerator NotSkill()
+    {
+        float fadeCount = 0;
+        while (fadeCount < 1.0f)
+        {
+            fadeCount += 0.01f;
+            yield return new WaitForSeconds(0.01f);
+            notSkillText.color = new Color(255, 255, 255, fadeCount);
+        }
+
+        yield return new WaitForSeconds(1);
+
+        while (fadeCount >= 0)
+        {
+            fadeCount -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+            notSkillText.color = new Color(255, 255, 255, fadeCount);
+        }
+    }
+    #endregion
 
     void GameOver()
     {

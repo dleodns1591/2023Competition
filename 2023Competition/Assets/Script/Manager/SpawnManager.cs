@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
             float posX = Random.Range(-17, 15);
             int enemyRandom = Random.Range(0, enemyList.Count);
 
-            Instantiate(enemyList[enemyRandom], new Vector3(posX, Player.instance.transform.position.y, 17), enemyList[enemyRandom].transform.rotation);
+            Instantiate(enemyList[enemyRandom], new Vector3(posX, Player.instance.transform.position.y, 17), enemyList[enemyRandom].transform.rotation, gameObject.transform);
             yield return new WaitForSeconds(spawnTime);
         }
     }
