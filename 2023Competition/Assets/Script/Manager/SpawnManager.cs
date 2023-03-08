@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager instance;
+
+    [Header("적 소환")]
     [SerializeField] List<GameObject> enemyList = new List<GameObject>();
     [SerializeField] int spawnTime = 0;
+
+    [Header("아이템")]
+    public List<GameObject> itemList = new List<GameObject>();
 
     void Start()
     {
@@ -19,6 +25,8 @@ public class SpawnManager : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
+
         StartCoroutine("Spawn");
     }
 

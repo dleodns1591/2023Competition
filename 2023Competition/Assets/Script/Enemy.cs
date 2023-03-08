@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
         Circle,
         Meteor,
     }
+
     public EAttack eAttack;
 
     [Header("¿Ãµø")]
