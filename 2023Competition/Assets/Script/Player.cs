@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         StartCoroutine(Skill());
 
         if(putBomb != null)
-            putBomb.transform.position = Vector3.Slerp(putBomb.transform.position, new Vector3(-1, -1, -1), 0.05f);
+            putBomb.transform.position = Vector3.Slerp(putBomb.transform.position, new Vector3(-1, -7, -1), 0.05f);
 
     }
 

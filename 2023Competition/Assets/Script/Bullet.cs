@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
 
     void Move()
     {
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
