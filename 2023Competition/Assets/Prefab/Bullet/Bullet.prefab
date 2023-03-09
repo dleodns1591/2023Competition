@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39499f68824f5ee4b99dbdd7046c7031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eBullet: 0
   moveSpeed: 20
   moveDirection: {x: 0, y: 0, z: 1}
-  attack: 1
+  attack: 2

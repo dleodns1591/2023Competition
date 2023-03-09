@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eMove: 0
   eAttack: 2
-  moveSpeed: 3
+  moveSpeed: 10
   moveDirection: {x: 0, y: 0, z: -1}
   bullet: {fileID: 0}
   meteorAmong: {fileID: 2858391174253329358}

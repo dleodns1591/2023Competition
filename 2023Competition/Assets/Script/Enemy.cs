@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        Invoke("Attack", 1);
         StartCoroutine(Attack());
     }
 
@@ -64,16 +65,17 @@ public class Enemy : MonoBehaviour
         switch (eAttack)
         {
             case EAttack.Circle:
-                while (true)
+                for (int i = 0; i < 2; i++)
                 {
-                    for (int i = 0; i < 360; i += 13)
+                    for (int j = 0; j < 360; j += 23)
                     {
                         GameObject temp = Instantiate(bullet);
                         temp.transform.position = transform.position;
-                        temp.transform.rotation = Quaternion.Euler(90, 0, i);
+                        temp.transform.rotation = Quaternion.Euler(90, 0, j);
                     }
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(2);
                 }
+
                 break;
         }
     }

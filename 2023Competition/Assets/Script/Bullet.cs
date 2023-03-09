@@ -33,7 +33,16 @@ public class Bullet : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        switch (eBullet)
+        {
+            case EBullet.Player:
+                transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                break;
+
+            case EBullet.Enemy:
+                transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

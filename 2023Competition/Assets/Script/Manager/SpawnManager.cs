@@ -26,15 +26,14 @@ public class SpawnManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-
-        //StartCoroutine("Spawn");
+        StartCoroutine("Spawn");
     }
 
     IEnumerator Spawn()
     {
         while(true)
         {
-            float posX = Random.Range(-17, 15);
+            float posX = Random.Range(-10, 15);
             int enemyRandom = Random.Range(0, enemyList.Count);
 
             Instantiate(enemyList[enemyRandom], new Vector3(posX, Player.instance.transform.position.y, 17), enemyList[enemyRandom].transform.rotation, gameObject.transform);
