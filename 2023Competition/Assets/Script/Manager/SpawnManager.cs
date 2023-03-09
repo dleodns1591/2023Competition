@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     {
         instance = this;
 
-        StartCoroutine("Spawn");
+        //StartCoroutine("Spawn");
     }
 
     IEnumerator Spawn()
