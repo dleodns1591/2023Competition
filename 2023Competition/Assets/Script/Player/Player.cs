@@ -25,9 +25,9 @@ public class Player : MonoBehaviour
 
     [Header("½ºÅ³")]
     [SerializeField] float hpCoolTime = 0;
-    [SerializeField] float hpCurrentCoolTime = 0;
+    public float hpCurrentCoolTime = 0;
     [SerializeField] float bombCoolTime = 0;
-    [SerializeField] float bombCurrentCoolTime = 0;
+    public float bombCurrentCoolTime = 0;
 
     [SerializeField] GameObject bombPrefab;
     [SerializeField] GameObject enemyDieParticle;

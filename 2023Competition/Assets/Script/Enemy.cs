@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public enum EMove
-    {
-        None,
-        UpDown,
-    }
-
     public enum EAttack
     {
         None,
-        Circle,
         Meteor,
+        Circle,
+        CircleDelay
     }
-    public EMove eMove;
     public EAttack eAttack;
 
     [Header("이동")]
@@ -29,13 +23,19 @@ public class Enemy : MonoBehaviour
     [SerializeField] int attack = 0;
     public int score = 0;
 
+    [Space(10)]
+    [SerializeField] int circleCount = 0;
+
+    [Space(5)]
+    [SerializeField] int circleDelayCount = 0;
+    [SerializeField] bool isDelay = false;
+
     [Header("체력")]
     public int hp = 0;
 
     void Start()
     {
         Invoke("Attack", 1);
-        StartCoroutine(Attack());
     }
 
     void Update()
@@ -60,25 +60,51 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator Attack()
+    #region 공격
+    void Attack()
     {
         switch (eAttack)
         {
             case EAttack.Circle:
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < 360; j += 23)
-                    {
-                        GameObject temp = Instantiate(bullet);
-                        temp.transform.position = transform.position;
-                        temp.transform.rotation = Quaternion.Euler(90, 0, j);
-                    }
-                    yield return new WaitForSeconds(2);
-                }
+                StartCoroutine(AttackCircle(circleCount));
+                break;
 
+            case EAttack.CircleDelay:
+                StartCoroutine(AttackCircleDelay(circleDelayCount));
                 break;
         }
     }
+
+    IEnumerator AttackCircle(int count) // 원형 공격
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 360; j += 360 / count)
+                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j));
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    IEnumerator AttackCircleDelay(int count) // 딜레이 있는 원형 공격
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            isDelay = false;
+
+            for (int j = 0; j < 360; j += 360 / count)
+            {
+                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j));
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            isDelay = true;
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    #endregion
 
     void MeteorRotation()
     {

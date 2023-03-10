@@ -9633,14 +9633,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c6f9b8df422124984f822a2f65302a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eMove: 1
-  eAttack: 1
+  eAttack: 3
   moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: -1}
   bullet: {fileID: 8275441775895359645, guid: b35713e818f151b498e87c884e3fad5c, type: 3}
   meteorAmong: {fileID: 0}
   attack: 10
   score: 100
+  circleCount: 0
+  circleDelayCount: 8
+  isDelay: 0
   hp: 5
 --- !u!1 &2392224677135608335
 GameObject:

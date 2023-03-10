@@ -80,13 +80,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMove: 0
-  eAttack: 2
+  eAttack: 1
   moveSpeed: 10
   moveDirection: {x: 0, y: 0, z: -1}
   bullet: {fileID: 0}
   meteorAmong: {fileID: 2858391174253329358}
   attack: 20
   score: 200
+  circleCount: 0
+  circleDelayCount: 0
+  isDelay: 0
   hp: 10
 --- !u!135 &8255212047323808735
 SphereCollider:

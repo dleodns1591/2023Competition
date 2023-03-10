@@ -17817,11 +17817,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMove: 1
-  eAttack: 0
+  eAttack: 2
   moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: -1}
   bullet: {fileID: 8275441775895359645, guid: b35713e818f151b498e87c884e3fad5c, type: 3}
   meteorAmong: {fileID: 0}
   attack: 10
   score: 100
+  circleCount: 8
+  circleDelayCount: 0
+  isDelay: 0
   hp: 5
