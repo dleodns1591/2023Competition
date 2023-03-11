@@ -6,8 +6,8 @@ public class BackGround : MonoBehaviour
 {
     [SerializeField] Transform target;
     [SerializeField] float scrollRange = 0;
-    [SerializeField] int moveSpeed = 0;
     [SerializeField] Vector3 moveDirection = Vector3.back;
+    public int moveSpeed = 0;
 
     void Start()
     {

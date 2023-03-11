@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] Text scoreText;
     [SerializeField] Text timerText;
-    float timer = 0;
+    public float timer = 0;
 
     [Header("°ÔÀÌÁö")]
     [SerializeField] Slider hpSlider;

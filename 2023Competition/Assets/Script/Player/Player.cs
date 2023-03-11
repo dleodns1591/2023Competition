@@ -15,7 +15,16 @@ public class Player : MonoBehaviour
     [Header("공격")]
     [SerializeField] GameObject bullet;
     [SerializeField] float attackRange = 0;
-    public int level = 1;
+
+    [Space(10)]
+    [SerializeField] GameObject levelTarget1;
+    [SerializeField] GameObject levelTarget2_1;
+    [SerializeField] GameObject levelTarget2_2;
+    [SerializeField] GameObject levelTarget3_1;
+    [SerializeField] GameObject levelTarget3_2;
+    [SerializeField] GameObject levelTarget4_1;
+    [SerializeField] GameObject levelTarget4_2;
+
 
     [Header("내구도 / 연료")]
     public float currentHp = 0;
@@ -53,6 +62,7 @@ public class Player : MonoBehaviour
         Attack();
         GameOver();
         StartCoroutine(Skill());
+        Level();
 
         if (putBomb != null)
             putBomb.transform.position = Vector3.Slerp(putBomb.transform.position, new Vector3(-1, -7, -1), 0.05f);
@@ -82,9 +92,9 @@ public class Player : MonoBehaviour
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
         if (x == 1)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, -20)), 0.1f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, -0.3f)), 0.1f);
         else if (x == -1)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 20)), 0.1f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0.3f)), 0.1f);
         else
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, 0, 0)), 0.1f);
     }
@@ -205,6 +215,11 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    void Level()
+    {
+        transform.GetChild(GameManager.instance.currentLevel - 1).gameObject.SetActive(true);
+    }
+
     void GameOver()
     {
         if (currentFuel <= 0 || currentHp <= 0)
@@ -219,7 +234,27 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            Instantiate(bullet, new Vector3(transform.position.x + 1.3f, transform.position.y, transform.position.z + 3), Quaternion.Euler(new Vector3(90, 0, 0)));
+            Instantiate(bullet, levelTarget1.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+
+            if (transform.GetChild(1).gameObject.activeSelf)
+            {
+                Instantiate(bullet, levelTarget2_1.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+                Instantiate(bullet, levelTarget2_2.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+            }
+
+            if (transform.GetChild(2).gameObject.activeSelf)
+            {
+                Instantiate(bullet, levelTarget3_1.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+                Instantiate(bullet, levelTarget3_2.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+            }
+
+            if (transform.GetChild(3).gameObject.activeSelf)
+            {
+                Instantiate(bullet, levelTarget4_1.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+                Instantiate(bullet, levelTarget4_2.transform.position, Quaternion.Euler(new Vector3(90, 0, 0)));
+            }
+
+
             yield return new WaitForSeconds(attackRange);
         }
     }

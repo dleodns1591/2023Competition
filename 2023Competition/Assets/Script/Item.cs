@@ -35,15 +35,18 @@ public class Item : MonoBehaviour
         transform.position += moveSpeed * moveDirection * Time.deltaTime;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             switch (eItem)
             {
                 case EItem.Strong:
-                    if (player.level < 4)
-                        player.level++;
+                    if (GameManager.instance.currentLevel < 4)
+                    {
+                        Debug.Log("asdfasdf");
+                        GameManager.instance.currentLevel++;
+                    }
                     else
                         GameManager.instance.currentScore += 300;
                     break;
@@ -72,5 +75,8 @@ public class Item : MonoBehaviour
 
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.CompareTag("DestroyWall"))
+            Destroy(gameObject);
     }
 }
