@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int currentScore = 0; // 현재 스코어
+    public int dieEnemyCount = 0; // 죽은 적의 갯수
 
     public int currentLevel = 1;
     int levelMax = 4; // 최대 레벨
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-   
+
 
     void Cheat()
     {
@@ -62,23 +63,26 @@ public class GameManager : MonoBehaviour
             player.currentFuel = player.maxFuel;
 
         if (Input.GetKeyDown(KeyCode.F6)) //스테이지 이동
+            MoveScene();
+    }
+
+    public void MoveScene()
+    {
+        Time.timeScale = 1;
+
+        switch (SceneManager.GetActiveScene().name)
         {
-            switch (SceneManager.GetActiveScene().name)
-            {
-                case "Ingame1":
-                    SceneManager.LoadScene("Ingame2");
-                    break;
+            case "Ingame1":
+                SceneManager.LoadScene("Ingame2");
+                break;
 
-                case "Ingame2":
-                    SceneManager.LoadScene("Ingame3");
-                    break;
+            case "Ingame2":
+                SceneManager.LoadScene("Ingame3");
+                break;
 
-                case "Ingame3":
-                    SceneManager.LoadScene("Ingame1");
-                    break;
-            }
-
+            case "Ingame3":
+                SceneManager.LoadScene("Ingame1");
+                break;
         }
-
     }
 }

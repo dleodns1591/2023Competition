@@ -35,6 +35,11 @@ public class UIManager : MonoBehaviour
 
     [Header("클리어 화면")]
     public GameObject clearWindow;
+    public Text clearScore;
+    public Text currentTime;
+    public Text dieEnemy;
+    public Text totalText;
+    public Button nextBtn;
 
     void Start()
     {
@@ -44,8 +49,9 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         Menu();
-        IngameText();
         Slider();
+        IngameText();
+        ClearWindow();
     }
 
     void Menu()
@@ -92,6 +98,15 @@ public class UIManager : MonoBehaviour
         fuelSlider.value = Mathf.Lerp(fuelSlider.value, currentFuel / maxFuel, Time.deltaTime * fuelDownSpeed);
     }
 
+    void ClearWindow()
+    {
+        clearScore.text = GameManager.instance.currentScore.ToString();
+        currentTime.text = timer.ToString();
+        dieEnemy.text = GameManager.instance.dieEnemyCount.ToString();
+
+        totalText.text = GameManager.instance.currentScore + (int)timer + GameManager.instance.dieEnemyCount.ToString();
+    }
+
     void MenuBtns()
     {
         backBtn.onClick.AddListener(() =>
@@ -117,6 +132,11 @@ public class UIManager : MonoBehaviour
         {
             SceneManager.LoadScene("Title");
             Time.timeScale = 1;
+        });
+
+        nextBtn.onClick.AddListener(() =>
+        {
+            GameManager.instance.MoveScene();
         });
     }
 }

@@ -41,34 +41,33 @@ public class Item : MonoBehaviour
         {
             switch (eItem)
             {
-                case EItem.Strong:
+                case EItem.Strong: // 레벨업 증가 아이템
                     if (GameManager.instance.currentLevel < 4)
                     {
-                        Debug.Log("asdfasdf");
                         GameManager.instance.currentLevel++;
                     }
                     else
                         GameManager.instance.currentScore += 300;
                     break;
 
-                case EItem.Shild:
+                case EItem.Shild: // 방어 아이템
                     break;
 
-                case EItem.Repair:
+                case EItem.Repair: // 내구도 수리 아이템
                     if (player.currentHp + 20 <= player.maxHp)
                         player.currentHp += 20;
                     else
                         player.currentHp = player.maxHp;
                     break;
 
-                case EItem.Fuel:
+                case EItem.Fuel: // 연료 증가 아이템
                     if (player.currentFuel + 30 <= player.maxFuel)
                         player.currentFuel += 30;
                     else
                         player.currentFuel = player.maxFuel;
                     break;
 
-                case EItem.Score:
+                case EItem.Score: // 점수 증가 아이템
                     GameManager.instance.currentScore += 500;
                     break;
             }

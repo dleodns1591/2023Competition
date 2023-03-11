@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour
         {
             RandomItem();
             GameManager.instance.currentScore += score;
+            GameManager.instance.dieEnemyCount++;
             Destroy(gameObject);
         }
     }
