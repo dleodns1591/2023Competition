@@ -61,7 +61,24 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F5)) // 연료 초기화
             player.currentFuel = player.maxFuel;
 
-        //if(Input.GetKeyDown(KeyCode.F6)) //스테이지 이동
+        if (Input.GetKeyDown(KeyCode.F6)) //스테이지 이동
+        {
+            switch (SceneManager.GetActiveScene().name)
+            {
+                case "Ingame1":
+                    SceneManager.LoadScene("Ingame2");
+                    break;
+
+                case "Ingame2":
+                    SceneManager.LoadScene("Ingame3");
+                    break;
+
+                case "Ingame3":
+                    SceneManager.LoadScene("Ingame1");
+                    break;
+            }
+
+        }
 
     }
 }

@@ -33,6 +33,9 @@ public class UIManager : MonoBehaviour
     public Text overScore;
     [SerializeField] Button overOutBtn;
 
+    [Header("클리어 화면")]
+    public GameObject clearWindow;
+
     void Start()
     {
         MenuBtns();

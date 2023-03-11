@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] float shakeIntensity = 0;
 
     [SerializeField] Image bossSpawnFade;
+    [SerializeField] GameObject boss;
     [SerializeField] GameObject star1;
     [SerializeField] GameObject star2;
 
@@ -87,6 +88,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(1); // 1초 후
 
             // 보스 소환
+            Instantiate(boss, new Vector3(2, -7, 4), boss.transform.rotation);
 
             while (fadeCount >= 0) // FadeOut
             {
@@ -107,7 +109,7 @@ public class SpawnManager : MonoBehaviour
 
             for (int i = 0; i < star1.transform.childCount; i++)
             {
-                Vector3 starTarget = new Vector3(0.1f, star1.transform.GetChild(i).transform.position.y, 0);
+                Vector3 starTarget = new Vector3(2, star1.transform.GetChild(i).transform.position.y, 0);
 
                 star1.transform.GetChild(i).transform.position = Vector3.Lerp(star1.transform.GetChild(i).transform.position, starTarget, 0.01f);
                 star2.transform.GetChild(i).transform.position = Vector3.Lerp(star2.transform.GetChild(i).transform.position, starTarget, 0.01f);
