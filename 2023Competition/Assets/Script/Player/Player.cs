@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject levelTarget4_1;
     [SerializeField] GameObject levelTarget4_2;
 
+    [Header("맞음")]
+    [SerializeField] GameObject hit;
+    [SerializeField] float shakeTime = 0;
+    [SerializeField] float shakeIntensity = 0;
 
     [Header("내구도 / 연료")]
     public float currentHp = 0;
@@ -256,6 +260,33 @@ public class Player : MonoBehaviour
 
 
             yield return new WaitForSeconds(attackRange);
+        }
+    }
+
+    IEnumerator ShakeCmaer()
+    {
+        Vector3 camerPos = Camera.main.transform.position;
+        float shake = shakeTime;
+
+        hit.SetActive(true);
+        while (shake > 0.0f)
+        {
+            Camera.main.transform.position = camerPos + Random.insideUnitSphere * shakeIntensity;
+            shake -= Time.deltaTime;
+            yield return null;
+        }
+
+        Camera.main.transform.position = camerPos;
+        hit.SetActive(false);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            currentHp -= other.GetComponent<Enemy>().attack;
+            StartCoroutine(ShakeCmaer());
+            Destroy(other);
         }
     }
 }

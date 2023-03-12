@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     [Header("АјАн")]
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject meteorAmong;
-    [SerializeField] int attack = 0;
+    public int attack = 0;
     public int score = 0;
 
     [Space(10)]
@@ -152,14 +152,5 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Wall"))
             Destroy(gameObject);
-
-        else if (other.CompareTag("PlayerBullet"))
-            hp -= Bullet.instance.attack;
-
-        else if (other.CompareTag("Player"))
-        {
-            Player.instance.currentHp -= attack;
-            Destroy(gameObject);
-        }
     }
 }

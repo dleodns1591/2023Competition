@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
 
         Player.instance.currentFuel -= Time.deltaTime * fuelDownSpeed;
 
-        hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp / maxHp, Time.deltaTime * hpDownSpeed);
+        hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp / maxHp, Time.unscaledDeltaTime * hpDownSpeed);
         fuelSlider.value = Mathf.Lerp(fuelSlider.value, currentFuel / maxFuel, Time.deltaTime * fuelDownSpeed);
     }
 
@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
         currentTime.text = timer.ToString();
         dieEnemy.text = GameManager.instance.dieEnemyCount.ToString();
 
-        totalText.text = GameManager.instance.currentScore + (int)timer + GameManager.instance.dieEnemyCount.ToString();
+        totalText.text = GameManager.instance.currentScore - (int)timer + GameManager.instance.dieEnemyCount.ToString();
     }
 
     void MenuBtns()

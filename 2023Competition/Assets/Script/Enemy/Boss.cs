@@ -17,6 +17,8 @@ public class Boss : MonoBehaviour
     [Header("Á×À½")]
     [SerializeField] GameObject dieParticle;
 
+    [Header("°ø°Ý")]
+    bool isAttack = false;
 
     void Start()
     {

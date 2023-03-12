@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator BossSpawn() // 보스스폰 함수
     {
-        if (UIManager.instance.timer > 3 && !isBossSpawn)
+        if (UIManager.instance.timer > 60 && !isBossSpawn)
         {
             isSpawn = true;
             isBossSpawn = true;
