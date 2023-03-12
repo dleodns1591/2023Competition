@@ -45,10 +45,9 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("DestroyWall"))
-            Destroy(gameObject);
+
 
         switch (eBullet)
         {

@@ -17798,10 +17798,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8134848712526400516}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!114 &49276222
@@ -17816,7 +17816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c6f9b8df422124984f822a2f65302a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eMove: 1
   eAttack: 2
   moveSpeed: 5
   moveDirection: {x: 0, y: 0, z: -1}

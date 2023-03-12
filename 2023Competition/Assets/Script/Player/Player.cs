@@ -286,7 +286,7 @@ public class Player : MonoBehaviour
         {
             currentHp -= other.GetComponent<Enemy>().attack;
             StartCoroutine(ShakeCmaer());
-            Destroy(other);
+            Destroy(other.gameObject);
         }
     }
 }
