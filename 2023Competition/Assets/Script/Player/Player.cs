@@ -170,6 +170,10 @@ public class Player : MonoBehaviour
                     Destroy(particle, 3);
                     Destroy(SpawnManager.instance.transform.GetChild(i).gameObject);
                 }
+
+                for(int i = 0; i < SpawnManager.instance.bulletVowel.transform.childCount; i++)
+                    Destroy(SpawnManager.instance.bulletVowel.transform.GetChild(i).gameObject);
+
             }
 
             else

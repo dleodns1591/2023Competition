@@ -21,11 +21,6 @@ public class Bullet : MonoBehaviour
     [Header("АјАн")]
     public int attack = 0;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         Move();
@@ -65,5 +60,8 @@ public class Bullet : MonoBehaviour
                 }
                 break;
         }
+
+        if(other.CompareTag("DestroyWall"))
+            Destroy(gameObject);
     }
 }

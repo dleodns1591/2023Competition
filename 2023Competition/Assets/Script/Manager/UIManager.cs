@@ -100,11 +100,11 @@ public class UIManager : MonoBehaviour
 
     void ClearWindow()
     {
-        clearScore.text = GameManager.instance.currentScore.ToString();
-        currentTime.text = timer.ToString();
-        dieEnemy.text = GameManager.instance.dieEnemyCount.ToString();
+        clearScore.text = "Á¡¼ö : " + GameManager.instance.currentScore;
+        currentTime.text = "½Ã°£ : " + (int)timer;
+        dieEnemy.text = "Á×Àº Àû : " + GameManager.instance.dieEnemyCount;
 
-        totalText.text = GameManager.instance.currentScore - (int)timer + GameManager.instance.dieEnemyCount.ToString();
+        totalText.text = "ÅäÅ» : " + (GameManager.instance.currentScore - (int)timer + GameManager.instance.dieEnemyCount);
     }
 
     void MenuBtns()

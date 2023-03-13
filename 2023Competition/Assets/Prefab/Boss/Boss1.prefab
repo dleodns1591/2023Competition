@@ -58741,7 +58741,7 @@ MonoBehaviour:
   maxHp: 100
   hpDownSpeed: 10
   bossSlider: {fileID: 5907654017798185711}
-  dieParticle: {fileID: 0}
+  dieParticle: {fileID: 8048583588484684582, guid: cf10ad1c1a2c3a049b4ea2d128b3de60, type: 3}
 --- !u!1 &8267749074002461499
 GameObject:
   m_ObjectHideFlags: 0
