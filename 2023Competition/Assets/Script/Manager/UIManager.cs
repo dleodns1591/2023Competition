@@ -92,7 +92,8 @@ public class UIManager : MonoBehaviour
         hpText.text = ((int)currentHp).ToString();
         fuelText.text = ((int)currentFuel).ToString();
 
-        Player.instance.currentFuel -= Time.deltaTime * fuelDownSpeed;
+        if (SpawnManager.instance.isBossSpawn)
+            Player.instance.currentFuel -= Time.deltaTime * fuelDownSpeed;
 
         hpSlider.value = Mathf.Lerp(hpSlider.value, currentHp / maxHp, Time.unscaledDeltaTime * hpDownSpeed);
         fuelSlider.value = Mathf.Lerp(fuelSlider.value, currentFuel / maxFuel, Time.deltaTime * fuelDownSpeed);

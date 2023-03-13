@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject star1;
     [SerializeField] GameObject star2;
 
-    bool isBossSpawn = false;
+    public bool isBossSpawn = false;
     bool isBossDirector = false;
 
     [Header("아이템")]
@@ -68,6 +68,7 @@ public class SpawnManager : MonoBehaviour
             isSpawn = true;
             isBossSpawn = true;
             StopCoroutine("Spawn"); // 적 스폰 중지
+
 
             yield return new WaitForSeconds(3); // 3초 후 보스 연출
 

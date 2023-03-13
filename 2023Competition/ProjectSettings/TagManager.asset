@@ -50,6 +50,9 @@ TagManager:
   - name: BackGround
     uniqueID: 3328195355
     locked: 0
+  - name: TitleParticle
+    uniqueID: 1877751223
+    locked: 0
   - name: Boss
     uniqueID: 240979409
     locked: 0
