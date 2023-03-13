@@ -47,8 +47,6 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-
-
         switch (eBullet)
         {
             case EBullet.Player:

@@ -145,7 +145,7 @@ public class Enemy : MonoBehaviour
             itemNum = 5;
 
         if (itemNum != 0)
-            Instantiate(SpawnManager.instance.itemList[itemNum - 1], transform.position, SpawnManager.instance.itemList[itemNum - 1].transform.rotation);
+            Instantiate(SpawnManager.instance.itemList[itemNum - 1], new Vector3(transform.position.x, -6.5f, transform.position.z), SpawnManager.instance.itemList[itemNum - 1].transform.rotation);
     }
 
     private void OnTriggerEnter(Collider other)

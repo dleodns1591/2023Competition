@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     public static Player instance;
     void Awake() => instance = this;
 
+    public GameObject shild;
+    public GameObject Barrier;
+    public bool isShild = false;
+
     [Header("¿Ãµø")]
     [SerializeField] int moveSpeed = 0;
     [SerializeField] Vector3 moveDirection = Vector3.zero;
@@ -67,6 +71,7 @@ public class Player : MonoBehaviour
         GameOver();
         StartCoroutine(Skill());
         Level();
+        StartCoroutine(ShildItem());
 
         if (putBomb != null)
             putBomb.transform.position = Vector3.Slerp(putBomb.transform.position, new Vector3(-1, -7, -1), 0.05f);
@@ -234,6 +239,33 @@ public class Player : MonoBehaviour
         }
     }
 
+    public IEnumerator Hit()
+    {
+        tag = "Invincibility";
+        Barrier.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+
+        Barrier.SetActive(false);
+        tag = "Player";
+    }
+
+    public IEnumerator ShildItem()
+    {
+        if (isShild)
+        {
+            isShild = false;
+            tag = "Invincibility";
+            shild.SetActive(true);
+
+            yield return new WaitForSeconds(2);
+
+            shild.SetActive(false);
+            tag = "Player";
+        }
+
+    }
+
     IEnumerator BulletSummon()
     {
         while (true)
@@ -263,7 +295,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator ShakeCmaer()
+
+    public IEnumerator ShakeCmaer()
     {
         Vector3 camerPos = Camera.main.transform.position;
         float shake = shakeTime;
@@ -282,11 +315,13 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && gameObject.CompareTag("Player"))
         {
             currentHp -= other.GetComponent<Enemy>().attack;
             StartCoroutine(ShakeCmaer());
             Destroy(other.gameObject);
+
+            StartCoroutine(Hit());
         }
     }
 }

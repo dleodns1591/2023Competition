@@ -9,6 +9,7 @@ TagManager:
   - DestroyWall
   - Enemy
   - EnemyBullet
+  - Invincibility
   layers:
   - Default
   - TransparentFX
