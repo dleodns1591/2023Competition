@@ -16,6 +16,8 @@ public class Boss : MonoBehaviour
 
     [Header("Á×À½")]
     [SerializeField] GameObject dieParticle;
+    bool isDie = false;
+    bool isDieBossMove = false;
 
     [Header("°ø°Ý")]
     bool isAttack = false;
@@ -45,14 +47,22 @@ public class Boss : MonoBehaviour
 
     IEnumerator Die()
     {
-        if (currentHp < 0)
+        Vector3 dieParticlePos = new Vector3(transform.position.x, -3, transform.position.z);
+        Vector3 dieBossPos = new Vector3(transform.position.x, -25, transform.position.z);
+
+        if (isDieBossMove)
+            transform.position = Vector3.Lerp(transform.position, dieBossPos, 0.01f);
+
+        if (currentHp < 0 && !isDie)
         {
+            isDie = true;
+            GameObject particle = Instantiate(dieParticle, dieParticlePos, Quaternion.identity);
+            isDieBossMove = true;
+
+            yield return new WaitForSeconds(3f);
+
             Time.timeScale = 0;
 
-            GameObject particle = Instantiate(dieParticle, transform.position, Quaternion.identity);
-
-            yield return new WaitForSecondsRealtime(3);
-            
             Destroy(particle);
             UIManager.instance.clearWindow.SetActive(true);
         }
@@ -61,6 +71,9 @@ public class Boss : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerBullet"))
+        {
             currentHp -= Bullet.instance.attack;
+            Destroy(other.gameObject);
+        }
     }
 }

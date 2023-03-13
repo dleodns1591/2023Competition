@@ -12,7 +12,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int spawnTime = 0;
     bool isSpawn = false;
 
+    [Header("적 총알 소환")]
+    public GameObject bulletVowel;
+
     [Header("보스 소환")]
+    [SerializeField] int bossSpawnTime = 0;
     [SerializeField] float shakeTime = 0;
     [SerializeField] float shakeIntensity = 0;
 
@@ -52,14 +56,14 @@ public class SpawnManager : MonoBehaviour
             float posX = Random.Range(-10, 15);
             int enemyRandom = Random.Range(0, enemyList.Count);
 
-            Instantiate(enemyList[enemyRandom], new Vector3(posX,-6.5f, 17), enemyList[enemyRandom].transform.rotation, gameObject.transform);
+            Instantiate(enemyList[enemyRandom], new Vector3(posX,-8, 17), enemyList[enemyRandom].transform.rotation, gameObject.transform);
             yield return new WaitForSeconds(spawnTime);
         }
     }
 
     IEnumerator BossSpawn() // 보스스폰 함수
     {
-        if (UIManager.instance.timer > 60 && !isBossSpawn)
+        if (UIManager.instance.timer > bossSpawnTime && !isBossSpawn)
         {
             isSpawn = true;
             isBossSpawn = true;

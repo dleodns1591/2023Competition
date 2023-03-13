@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 360; j += 360 / count)
-                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j));
+                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j), SpawnManager.instance.bulletVowel.gameObject.transform);
 
             yield return new WaitForSeconds(2);
         }
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
             for (int j = 0; j < 360; j += 360 / count)
             {
-                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j));
+                Instantiate(bullet, transform.position, Quaternion.Euler(90, 0, j), SpawnManager.instance.bulletVowel.gameObject.transform);
                 yield return new WaitForSeconds(0.1f);
             }
 
